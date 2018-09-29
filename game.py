@@ -59,7 +59,5 @@ class Game(object):
     def __init__(self):
         deck = Deck()
         deck.shuffle()
-        cards = list(deck)
-        for n in range(1, 8):
-            self.tableau.append([cards.pop() for _ in range(n)])
+        self.cards = list(deck)
         
