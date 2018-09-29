@@ -6,11 +6,30 @@ from ui import PALETTE, EmptyCardWidget, CardWidget, SpacerWidget
 from game import Game
 from time import sleep
 
+TURN_INFO = u'Player {}\'s turn'
+P1_SCORE_INFO = u'P1 score: {}'
+P2_SCORE_INFO = u'P2 score: {}'
+
+
 class GameApp(object):
     global loop
     def __init__(self):
         self.game = Game()
         self.current_selection = None
+        self.p1_score = 0
+        self.p2_score = 0
+        self.current_turn = 1
+        
+        self._statusbar = urwid.Text(
+            TURN_INFO.format(self.current_turn)
+        )
+        self._p1_score_widget = urwid.Text(
+            P1_SCORE_INFO.format(self.p1_score)
+        )
+        self._p2_score_widget = urwid.Text(
+            P2_SCORE_INFO.format(self.p2_score)
+        )
+
         self._rows = [
             urwid.Columns([EmptyCardWidget() for _ in range(13)]) for _ in range(4)
         ]
@@ -24,6 +43,12 @@ class GameApp(object):
             self._rows[2],
             urwid.Divider(),
             self._rows[3],
+            urwid.Divider(),
+            urwid.Columns([
+                self._statusbar,
+                self._p1_score_widget,
+                self._p2_score_widget,
+            ])
         ])
 
     def _update_rows(self): 
@@ -56,7 +81,7 @@ class GameApp(object):
         # 2 cards have been selected. Check if they have the same rank
         card_widget.face_up = True
         loop.draw_screen()
-        sleep(2)
+        sleep(1.5)
           
         if self.current_selection.card.rank == card_widget.card.rank:    
             # Player has guessed both cards correctly
@@ -73,11 +98,24 @@ class GameApp(object):
                 SpacerWidget(),
                 self._rows[row_2].options()
             )
+
+            # Award one point to the player and update score widget
+            if self.current_turn == 1:
+                self.p1_score += 1
+                self._p1_score_widget.set_text(P1_SCORE_INFO.format(self.p1_score))
+            else:
+                self.p2_score += 1
+                self._p2_score_widget.set_text(P2_SCORE_INFO.format(self.p2_score))
             
         else:
+            # Turn both cards face down again
             self.current_selection.face_up = False
             card_widget.face_up = False
             self.current_selection = None
+
+        # Switch current player's turn with this simple formula
+        self.current_turn = 3 - self.current_turn
+        self._statusbar.set_text(TURN_INFO.format(self.current_turn))
 
 
 def exit_game(key):

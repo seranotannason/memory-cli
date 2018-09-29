@@ -8,7 +8,7 @@ PALETTE = [
 ]
 
 # Modify these as needed
-SIZES = {'small': (4, 3), 'medium': (8, 6)}
+SIZES = {'small': (4, 3), 'medium': (6, 4), 'large': (8, 6)}
 card_size = 'medium'
 
 
