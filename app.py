@@ -6,7 +6,7 @@ from ui import PALETTE, EmptyCardWidget, CardWidget, SpacerWidget
 from game import Game
 from time import sleep
 
-TURN_INFO = u'Player {}\'s turn'
+TURN_INFO = u'It is Player {}\'s Turn'
 P1_SCORE_INFO = u'P1 score: {}'
 P2_SCORE_INFO = u'P2 score: {}'
 
@@ -44,11 +44,11 @@ class GameApp(object):
             urwid.Divider(),
             self._rows[3],
             urwid.Divider(),
-            urwid.Columns([
-                self._statusbar,
-                self._p1_score_widget,
-                self._p2_score_widget,
-            ])
+ #           urwid.Columns([
+            self._statusbar,
+            self._p1_score_widget,
+            self._p2_score_widget,
+  #          ])
         ])
 
     def _update_rows(self): 
@@ -60,12 +60,22 @@ class GameApp(object):
                 self._rows[row].options()
             )
 
-    def iter_allcards(self):
-        """Iterate through all card widgets in the game"""
+    def iter_allwidgets(self):
+        """Iterate through all card and spacer widgets in the game"""
         for row in self._rows:
-            for card_widget in row.contents:
-                yield card_widget
+            for widget in row.contents:
+                yield widget
 
+    def show_congrats_screen(self):
+        if self.p1_score > self.p2_score:
+            congrats_string = "Player 1 is the Winner!"
+        elif self.p1_score < self.p2_score:
+            congrats_string = "Player 2 is the Winner!"
+        else:
+            congrats_string = "You are both winners! :-)"
+        self._statusbar.set_text(
+            "GAME OVER! " + congrats_string + " Press Q to quit"
+        )
 
     def _card_clicked(self, card_widget):
         # Show first card
@@ -107,14 +117,19 @@ class GameApp(object):
                 self.p2_score += 1
                 self._p2_score_widget.set_text(P2_SCORE_INFO.format(self.p2_score))
             
+            if self.p1_score + self.p2_score >= 26:
+                # Game over, declare winner!
+                self.show_congrats_screen()
+                return
+
         else:
             # Turn both cards face down again
             self.current_selection.face_up = False
             card_widget.face_up = False
-            self.current_selection = None
 
         # Switch current player's turn with this simple formula
-        self.current_turn = 3 - self.current_turn
+        self.current_turn = 3 - self.current_turn    
+        self.current_selection = None
         self._statusbar.set_text(TURN_INFO.format(self.current_turn))
 
 

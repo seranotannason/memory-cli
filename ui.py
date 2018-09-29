@@ -9,7 +9,7 @@ PALETTE = [
 
 # Modify these as needed
 SIZES = {'small': (4, 3), 'medium': (6, 4), 'large': (8, 6)}
-card_size = 'medium'
+card_size = 'large'
 
 
 class BaseCardWidget(urwid.WidgetWrap):
@@ -31,7 +31,9 @@ class SpacerWidget(BaseCardWidget):
         super(SpacerWidget, self).__init__(self.text)
 
     def _draw_card_text(self):
-        return [u' '* self.card_columns +'\n'] * self.card_rows
+        # The decrement of rows is to account for expanding space in
+        # the vertical direction
+        return [u' '* self.card_columns +'\n'] * (self.card_rows-1)
 
 
 class EmptyCardWidget(BaseCardWidget):
