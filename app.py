@@ -7,6 +7,7 @@ from game import Game
 from time import sleep
 
 class GameApp(object):
+    global loop
     def __init__(self):
         self.game = Game()
         self.current_selection = None
@@ -54,6 +55,8 @@ class GameApp(object):
 
         # 2 cards have been selected. Check if they have the same rank
         card_widget.face_up = True
+        loop.draw_screen()
+        sleep(2)
           
         if self.current_selection.card.rank == card_widget.card.rank:    
             # Player has guessed both cards correctly
@@ -83,6 +86,7 @@ def exit_game(key):
 
 
 def main():
+    global loop
     reload(sys)
     sys.setdefaultencoding('utf8')
     app = GameApp()

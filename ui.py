@@ -9,7 +9,7 @@ PALETTE = [
 
 # Modify these as needed
 SIZES = {'small': (4, 3), 'medium': (8, 6)}
-card_size = 'small'
+card_size = 'medium'
 
 
 class BaseCardWidget(urwid.WidgetWrap):
