@@ -46,9 +46,9 @@ class EmptyCardWidget(BaseCardWidget):
 
     def _draw_card_text(self):
         return [
-                u'╭' + '─' * (self.card_columns-2) + '╮\n' 
-                + (self.card_rows-2) * (u'│'+ ' ' * (self.card_columns-2) + '│\n')
-                + u'╰' + '─' * (self.card_columns-2) + '╯\n'
+                u'╭' + u'─' * (self.card_columns-2) + u'╮\n' 
+                + (self.card_rows-2) * (u'│'+ ' ' * (self.card_columns-2) + u'│\n')
+                + u'╰' + u'─' * (self.card_columns-2) + u'╯\n'
             ]
 
     def selectable(self):
@@ -101,10 +101,10 @@ class CardWidget(BaseCardWidget):
                 [u'│', (style, u' ' * (columns-2)), u'│\n'] * (rows-4) +
                 [u'│', (redornot, u'{}{}{}'.format(suit, spaces,rank.rjust(2))), u'│\n']
             )
-        top = u'╭'+ '─' * (columns-2) +'╮\n'
+        top = u'╭'+ u'─' * (columns-2) + u'╮\n'
 
         text = [top] + filling
-        text += [u'╰' + '─' * (columns-2) + '╯\n']
+        text += [u'╰' + u'─' * (columns-2) + u'╯\n']
 
         if isinstance(text[-1], tuple):
             text[-1] = text[-1][0], text[-1][1].strip()

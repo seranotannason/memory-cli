@@ -53,7 +53,7 @@ class GameApp(object):
 
     def _update_rows(self): 
         for i, card in enumerate(self.game.cards):
-            row = i/13
+            row = i//13
             col = i%13
             self._rows[row].contents[col] = (
                 CardWidget(card, row, col, onclick=self._card_clicked),
@@ -140,8 +140,6 @@ def exit_game(key):
 
 def main():
     global loop
-    reload(sys)
-    sys.setdefaultencoding('utf8')
     app = GameApp()
     loop = urwid.MainLoop(
         urwid.Filler(app.main_layout, valign='top'),

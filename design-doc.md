@@ -18,7 +18,7 @@ Object-oriented programming (OOP) is the backbone of this app. The OOP design of
 The app is modularized into three main scripts: app, game, ui. 
 
 
-Because I am using Urwid as my main console-based programming library, implementing all widgets in the ui file is only natural.
+Because I am using Urwid as my main console-based programming library, it is only natural to implement all widgets in the UI file.
 
 
 The game script details the card, deck, and game classes that make up a game instance.
