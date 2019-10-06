@@ -17,6 +17,7 @@ All cards remain face down. Players take turns clicking on two cards to turn ove
 - If the two cards have the same rank, the current player gets one point and the two cards are removed from the table. 
 - Otherwise, players have 1.5 seconds to remember the two cards that have just been turned over before they are turned face down again.</br>
 
+If you wish to exit the game, press 'q'.</br>
 The player with the highest score after all cards have been turned over, wins!
 
 That's all, enjoy!
